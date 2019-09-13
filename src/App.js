@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Header from './components/layout/Header';
 import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
+import uuid from 'uuid';
 import './App.css';
 
 class App extends Component {
@@ -8,17 +10,17 @@ class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuid.v4(),
         title: 'Start coding',
         completed: true
       },
       {
-        id: 2,
+        id: uuid.v4(),
         title: 'Balance budget',
         completed: false
       },
       {
-        id: 3,
+        id: uuid.v4(),
         title: 'Read book',
         completed: false
       },
@@ -39,10 +41,20 @@ class App extends Component {
     this.setState({ todos : [...this.state.todos.filter(todo => todo.id !== id)]}) // gets everything that is NOT the clicked ID
   }
 
+  addTodo = (title) => {
+    const newTodo = {
+      id : uuid.v4(),
+      title,
+      completed : false,
+    }
+    this.setState({ todos : [...this.state.todos, newTodo]})
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
+        <AddTodo addTodo={this.addTodo} />
         <Todos todos={ this.state.todos } isChecked={this.isChecked} delTodo={this.delTodo}/>
       </div>
     );
